@@ -1,3 +1,9 @@
 node_modules/
 *.log
 package-lock.json
+
+**/.idea/*
+!.idea/workspace.cp.xml
+!.idea/codeStyleSettings.xml
+!.idea/encodings.xml
+!.idea/runConfigurations
