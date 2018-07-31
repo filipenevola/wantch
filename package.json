@@ -35,5 +35,11 @@
     "semi": true,
     "singleQuote": true,
     "trailingComma": "es5"
+  },
+  "meteor": {
+    "mainModule": {
+      "client": "startup/client/main.js",
+      "server": "startup/server/main.js"
+    }
   }
 }

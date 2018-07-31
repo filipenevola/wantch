@@ -4,7 +4,7 @@ const meteorExternals = require('webpack-meteor-externals');
 
 const clientConfig = {
   devtool: 'cheap-module-source-map',
-  entry: './client/main.js',
+  entry: './startup/client/main.js',
   module: {
     rules: [
       {
@@ -20,7 +20,7 @@ const clientConfig = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './client/main.html',
+      template: './startup/client/main.html',
     }),
     new webpack.HotModuleReplacementPlugin(),
   ],
@@ -34,7 +34,7 @@ const clientConfig = {
 };
 
 const serverConfig = {
-  entry: ['./server/main.js'],
+  entry: ['./startup/server/main.js'],
   target: 'node',
   devServer: {
     hot: true,
