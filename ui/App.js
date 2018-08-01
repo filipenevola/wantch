@@ -109,11 +109,10 @@ class App extends Component {
                     add
                   </button>
                 )}
-                <input type="checkbox" readOnly checked={false} />
-                <button className="toggle-private">Private</button>
-                <span className="text">
-                  <strong>{title}</strong> {voteAverage}
-                </span>
+                  <div>{voteAverage}</div>
+                  <div>
+                    <strong>{title}</strong>
+                  </div>
               </li>
             );
           })}
