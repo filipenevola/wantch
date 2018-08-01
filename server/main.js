@@ -1,1 +1,0 @@
-import '../imports/api/movies';
