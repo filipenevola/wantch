@@ -1,30 +1,48 @@
-import { Meteor } from 'meteor/meteor';
 import { hot } from 'react-hot-loader';
 import React, { Component } from 'react';
+import { methodCall } from './methods';
 
 class App extends Component {
   state = {
     movies: [],
+    pristine: true,
   };
 
+  clearMovies = () =>
+    this.setState(() => ({
+      movies: [],
+    }));
+
   searchMovies = ({ target: { value } }) => {
-    Meteor.call('moviesSearch', value, (error, result) => {
-      const data = JSON.parse(result);
-      if (!data || !data.results) {
-        return;
-      }
-      const { results: movies } = data;
-      this.setState(() => ({
-        movies,
-      }));
-    });
+    this.setState(() => ({
+      pristine: false,
+    }));
+    methodCall('moviesSearch', value)
+      .then(result => {
+        const data = JSON.parse(result);
+        if (!data || !data.results) {
+          this.clearMovies();
+          return;
+        }
+        const { results: movies } = data;
+        this.setState(() => ({
+          movies,
+        }));
+      })
+      .catch(error => {
+        console.error(error);
+        this.clearMovies();
+      });
   };
 
   render() {
     return (
       <div className="container">
         <header>
-          <h1>Filmes ({this.state.movies.length})</h1>
+          {this.state.pristine && <h1>Movies Search</h1>}
+          {!this.state.pristine && (
+            <h1>Movies found ({this.state.movies.length})</h1>
+          )}
 
           <label className="hide-completed">
             <input type="checkbox" readOnly checked={true} />

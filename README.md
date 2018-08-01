@@ -8,6 +8,12 @@ Original code copied from [here](https://github.com/ardatan/meteor-webpack/tree/
 
 08/08/2018
 ####01 - 19h - Empty app (only layout)
+- Javascript
+  - conditions: and, or (how they return values)
+    - how to use with React `{is && <Component/>}`
+  - functional: filter, map
+  - modules: import, export
+  - promises: then, catch
 - Explain server/main, client/main and api (movies and moviesRest)
 ####02 - 19:30h - React Synthetic Events
 - Search input onChange

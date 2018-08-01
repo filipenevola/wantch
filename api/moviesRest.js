@@ -17,5 +17,5 @@ export const findMovies = async obj => {
     return null;
   }
   const url = getRequestURL(SEARCH_MOVIE, obj);
-  return await rp(url);
+  return rp(url);
 };
