@@ -5,12 +5,14 @@ import { methodCall } from './methods';
 class App extends Component {
   state = {
     movies: [],
+    moviesIds: [],
+    moviesSearch: [],
     pristine: true,
   };
 
-  clearMovies = () =>
+  clearMoviesSearch = () =>
     this.setState(() => ({
-      movies: [],
+      moviesSearch: [],
     }));
 
   searchMovies = ({ target: { value } }) => {
@@ -21,19 +23,47 @@ class App extends Component {
       .then(result => {
         const data = JSON.parse(result);
         if (!data || !data.results) {
-          this.clearMovies();
+          this.clearMoviesSearch();
           return;
         }
-        const { results: movies } = data;
+        const { results: moviesSearch } = data;
         this.setState(() => ({
-          movies,
+          moviesSearch,
         }));
       })
       .catch(error => {
         console.error(error);
-        this.clearMovies();
+        this.clearMoviesSearch();
       });
   };
+
+  saveMovie = movie => {
+    methodCall('movieSave', movie);
+    this.setState(({ movies, moviesIds }) => {
+      if (moviesIds.includes(movie.id)) return {};
+      return {
+        movies: [...movies, movie],
+        moviesIds: [...moviesIds, movie.id],
+      };
+    });
+  };
+
+  removeMovie = movie => {
+    methodCall('movieRemove', movie);
+    this.setState(({ movies, moviesIds }) => {
+      if (!moviesIds.includes(movie.id)) return {};
+      return {
+        movies: movies.filter(m => m.id !== movie.id),
+        moviesIds: moviesIds.filter(id => id !== movie.id),
+      };
+    });
+  };
+
+  componentDidMount() {
+    methodCall('movies').then(movies =>
+      this.setState(() => ({ movies, moviesIds: movies.map(m => m.id) }))
+    );
+  }
 
   render() {
     return (
@@ -41,7 +71,7 @@ class App extends Component {
         <header>
           {this.state.pristine && <h1>Movies Search</h1>}
           {!this.state.pristine && (
-            <h1>Movies found ({this.state.movies.length})</h1>
+            <h1>Movies found ({this.state.moviesSearch.length})</h1>
           )}
 
           <label className="hide-completed">
@@ -60,16 +90,33 @@ class App extends Component {
         </header>
 
         <ul>
-          {this.state.movies.map(({ id, title, vote_average: voteAverage }) => (
-            <li key={id}>
-              <button className="delete">&times;</button>
-              <input type="checkbox" readOnly checked={false} />
-              <button className="toggle-private">Private</button>
-              <span className="text">
-                <strong>{title}</strong> {voteAverage}
-              </span>
-            </li>
-          ))}
+          {this.state.moviesSearch.map(movie => {
+            const { id, title, vote_average: voteAverage } = movie;
+            return (
+              <li key={id}>
+                {this.state.moviesIds.includes(movie.id) ? (
+                  <button
+                    className="delete"
+                    onClick={() => this.removeMovie(movie)}
+                  >
+                    remove
+                  </button>
+                ) : (
+                  <button
+                    className="delete"
+                    onClick={() => this.saveMovie(movie)}
+                  >
+                    add
+                  </button>
+                )}
+                <input type="checkbox" readOnly checked={false} />
+                <button className="toggle-private">Private</button>
+                <span className="text">
+                  <strong>{title}</strong> {voteAverage}
+                </span>
+              </li>
+            );
+          })}
         </ul>
       </div>
     );
