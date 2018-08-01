@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { findMovies } from './moviesRest';
+import { findMovies } from '../rest/moviesRest';
 
 Meteor.methods({
   moviesSearch(query) {

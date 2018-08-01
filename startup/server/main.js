@@ -1,1 +1,2 @@
-import '../../api/movies';
+import '../../api/methods/movies';
+import '../../api/graphql/initializeGraphQL';

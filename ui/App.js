@@ -2,12 +2,32 @@ import { Meteor } from 'meteor/meteor';
 import { hot } from 'react-hot-loader';
 import React, { Component } from 'react';
 
-class App extends Component {
+import gql from 'graphql-tag';
+
+import { apolloClient } from '../startup/client/main';
+
+class AppComponent extends Component {
   state = {
     movies: [],
   };
 
   searchMovies = ({ target: { value } }) => {
+    apolloClient
+      .query({
+        query: gql`
+          query SearchMovies($query: String!) {
+            searchMovies(query: $query) {
+              id
+              title
+              voteAverage
+            }
+          }
+        `,
+        variables: { query: value },
+      })
+      .then(({ data: { searchMovies } }) => {
+        console.log(`searchMovies=${JSON.stringify(searchMovies)}`);
+      });
     Meteor.call('moviesSearch', value, (error, result) => {
       const data = JSON.parse(result);
       if (!data || !data.results) {
@@ -27,14 +47,12 @@ class App extends Component {
           <h1>Filmes ({this.state.movies.length})</h1>
 
           <label className="hide-completed">
-            <input type="checkbox" readOnly checked={true} />
+            <input type="checkbox" readOnly checked />
             Hide Completed Tasks
           </label>
 
           <form className="new-task">
             <input
-              type="text"
-              ref="textInput"
               placeholder="Busque o filme que deseja"
               onChange={this.searchMovies}
             />
@@ -58,4 +76,4 @@ class App extends Component {
   }
 }
 
-export default hot(module)(App);
+export const App = hot(module)(AppComponent);

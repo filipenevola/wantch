@@ -16,3 +16,4 @@ ardatan:webpack-dev-middleware
 
 # avoid tracker not found error on the client
 tracker
+swydo:ddp-apollo

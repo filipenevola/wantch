@@ -37,5 +37,8 @@ Original code copied from [here](https://github.com/ardatan/meteor-webpack/tree/
 - List item actions
 ####14 - 22:00h - Select Where to Watch
 - Netflix, TV, PC
+#### PWA
+#### Android
+#### iOS
 
 ## License: MIT
