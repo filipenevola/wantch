@@ -2,12 +2,14 @@ import { hot } from 'react-hot-loader';
 import React, { Component } from 'react';
 import { methodCall } from './methods';
 import { getImageUrl } from '../api/moviesHelper';
+const MAX_OVERVIEW_LENGTH = 250;
 
 class App extends Component {
   state = {
     movies: [],
     moviesIds: [],
     moviesSearch: [],
+    moviesSearchTotal: 0,
     pristine: true,
   };
 
@@ -27,9 +29,13 @@ class App extends Component {
           this.clearMoviesSearch();
           return;
         }
-        const { results: moviesSearch } = data;
+        const {
+          results: moviesSearch,
+          total_results: moviesSearchTotal,
+        } = data;
         this.setState(() => ({
           moviesSearch,
+          moviesSearchTotal,
         }));
       })
       .catch(error => {
@@ -64,6 +70,16 @@ class App extends Component {
     methodCall('movies').then(movies =>
       this.setState(() => ({ movies, moviesIds: movies.map(m => m.id) }))
     );
+    methodCall('moviesPopular').then(result => {
+      const data = JSON.parse(result);
+      if (!data || !data.results) {
+        return;
+      }
+      const { results: moviesSearch } = data;
+      this.setState(() => ({
+        moviesSearch,
+      }));
+    });
   }
 
   render() {
@@ -71,16 +87,16 @@ class App extends Component {
       <div className="app">
         <div className="app-heder">
           <header>
-            {this.state.pristine && <h1>Movies Search</h1>}
+            {this.state.pristine && <h1>Wantch: Popular Movies</h1>}
             {!this.state.pristine && (
-              <h1>Movies found ({this.state.moviesSearch.length})</h1>
+              <h1>Wantch: Search Movies ({this.state.moviesSearchTotal})</h1>
             )}
 
             <form className="movie-search">
               <input
                 type="text"
                 ref="textInput"
-                placeholder="Busque o filme que deseja"
+                placeholder="Type the movie that you want to watch..."
                 onChange={this.searchMovies}
               />
             </form>
@@ -104,6 +120,10 @@ class App extends Component {
                 : voteAverage === 10
                   ? '10'
                   : voteAverage.toFixed(1);
+              const overviewFormatted =
+                overview && overview.length > MAX_OVERVIEW_LENGTH
+                  ? `${overview.substring(0, MAX_OVERVIEW_LENGTH)}...`
+                  : overview;
               return (
                 <div key={id} className="movie-item">
                   <div className="movie">
@@ -115,7 +135,9 @@ class App extends Component {
                       <div className="movie-title">
                         <strong>{title}</strong>
                       </div>
-                      <div className="movie-description">{overview}</div>
+                      <div className="movie-description">
+                        {overviewFormatted}
+                      </div>
                       <div className="movie-footer">
                         <div className="movie-vote">
                           <div className={voteClassName}>
