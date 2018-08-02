@@ -1,4 +1,3 @@
-/* CSS declarations go here */
 body {
   font-family: sans-serif;
   background-color: #315481;
@@ -17,10 +16,30 @@ body {
   font-size: 14px;
 }
 
-.container {
-  margin: 0 auto;
-  min-height: 100%;
-  background: white;
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.app-header {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.main::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: inherit;
 }
 
 header {
@@ -28,6 +47,7 @@ header {
   background-image: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);
   padding: 20px 15px 15px 15px;
   position: relative;
+  box-shadow: 0 3px 3px rgba(34, 25, 25, 0.4);
 }
 
 h1 {
@@ -59,7 +79,6 @@ form {
 }
 
 .movie-list {
-  margin: 5px;
   background: white;
 }
 
@@ -74,7 +93,14 @@ form {
 }
 
 .movie-image {
-  flex-basis: 10%;
+  flex-basis: 40%;
+  align-self: center;
+}
+
+@media only screen and (min-width: 600px) {
+  .movie-image {
+    flex-basis: 15%;
+  }
 }
 
 .movie-image img {

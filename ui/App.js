@@ -68,80 +68,84 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <header>
-          {this.state.pristine && <h1>Movies Search</h1>}
-          {!this.state.pristine && (
-            <h1>Movies found ({this.state.moviesSearch.length})</h1>
-          )}
+      <div className="app">
+        <div className="app-heder">
+          <header>
+            {this.state.pristine && <h1>Movies Search</h1>}
+            {!this.state.pristine && (
+              <h1>Movies found ({this.state.moviesSearch.length})</h1>
+            )}
 
-          <form className="movie-search">
-            <input
-              type="text"
-              ref="textInput"
-              placeholder="Busque o filme que deseja"
-              onChange={this.searchMovies}
-            />
-          </form>
-        </header>
+            <form className="movie-search">
+              <input
+                type="text"
+                ref="textInput"
+                placeholder="Busque o filme que deseja"
+                onChange={this.searchMovies}
+              />
+            </form>
+          </header>
+        </div>
 
-        <div className="movie-list">
-          {this.state.moviesSearch.map((movie, index) => {
-            const {
-              id,
-              title,
-              vote_average: voteAverage,
-              poster_path: posterPath,
-              overview,
-            } = movie;
-            const voteClassName =
-              voteAverage < 5 ? 'bad' : voteAverage > 7 ? 'good' : 'default';
-            const voteAverageFormatted = !voteAverage
-              ? '0.0'
-              : voteAverage === 10
-                ? '10'
-                : voteAverage.toFixed(1);
-            return (
-              <div key={id} className="movie-item">
-                <div className="movie">
-                  <div className="movie-image">
-                    <img src={getImageUrl(posterPath)} />
-                  </div>
-
-                  <div className="movie-content">
-                    <div className="movie-title">
-                      <strong>{title}</strong>
+        <div className="main">
+          <div className="movie-list">
+            {this.state.moviesSearch.map((movie, index) => {
+              const {
+                id,
+                title,
+                vote_average: voteAverage,
+                poster_path: posterPath,
+                overview,
+              } = movie;
+              const voteClassName =
+                voteAverage < 5 ? 'bad' : voteAverage > 7 ? 'good' : 'default';
+              const voteAverageFormatted = !voteAverage
+                ? '0.0'
+                : voteAverage === 10
+                  ? '10'
+                  : voteAverage.toFixed(1);
+              return (
+                <div key={id} className="movie-item">
+                  <div className="movie">
+                    <div className="movie-image">
+                      <img src={getImageUrl(posterPath)} />
                     </div>
-                    <div className="movie-description">{overview}</div>
-                    <div className="movie-footer">
-                      <div className="movie-vote">
-                        <div className={voteClassName}>
-                          {voteAverageFormatted}
-                        </div>
+
+                    <div className="movie-content">
+                      <div className="movie-title">
+                        <strong>{title}</strong>
                       </div>
-                      <div className="movie-actions">
-                        {this.state.moviesIds.includes(movie.id) ? (
-                          <button
-                            className="movie-action remove"
-                            onClick={() => this.removeMovie(movie)}
-                          >
-                            remove, please!
-                          </button>
-                        ) : (
-                          <button
-                            className="movie-action add"
-                            onClick={() => this.saveMovie(movie)}
-                          >
-                            {index % 2 === 0 ? 'want watch!' : 'I "wantch"!'}
-                          </button>
-                        )}
+                      <div className="movie-description">{overview}</div>
+                      <div className="movie-footer">
+                        <div className="movie-vote">
+                          <div className={voteClassName}>
+                            {voteAverageFormatted}
+                          </div>
+                        </div>
+                        <div className="movie-actions">
+                          {this.state.moviesIds.includes(movie.id) ? (
+                            <button
+                              className="movie-action remove"
+                              onClick={() => this.removeMovie(movie)}
+                            >
+                              remove, please!
+                            </button>
+                          ) : (
+                            <button
+                              className="movie-action add"
+                              onClick={() => this.saveMovie(movie)}
+                            >
+                              {index % 2 === 0 ? 'want watch!' : 'I "wantch"!'}
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     );
