@@ -11,7 +11,7 @@ TODO:
 - Test Android Build
 - Test iOS Build
 
-08/08/2018
+###08/08/2018
 ####01 - 19h - Empty app (only layout)
 - Javascript
   - template strings
@@ -24,6 +24,10 @@ TODO:
   - promises: then, catch
   - object syntax, short hand syntax
   - destructuring, assign, rest, spread
+- CSS
+  - mobile first
+  - @media only screen and (min-width: 600px)
+  - flexbox
 - Explain server/main, client/main and api (movies and moviesRest)
 ####02 - 19:30h - React Synthetic Events
 - Search input onChange
@@ -37,6 +41,7 @@ TODO:
 - Setup movie type and query
 ####07 - 22:00h - Search using GraphQL Query
 - Search using GraphQL query and set state with it
+###10/08/2018
 ####08 - 19h - Create GraphQL Mutation
 - Create a GraphQL Mutation to save a movie to watch
 ####09 - 19:30h - Create MongoDB Collection
