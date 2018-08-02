@@ -2,6 +2,7 @@ import { hot } from 'react-hot-loader';
 import React, { Component } from 'react';
 import { methodCall } from './methods';
 import { getImageUrl } from '../api/moviesHelper';
+
 const MAX_OVERVIEW_LENGTH = 250;
 
 class App extends Component {
@@ -87,15 +88,13 @@ class App extends Component {
     });
   };
 
-  toggleShowMyMovies = () => {
-    return this.setState(
+  toggleShowMyMovies = () => this.setState(
       ({ showMyMovies }) => ({
         showMyMovies: !showMyMovies,
         search: '',
       }),
       () => !this.state.showMyMovies && this.loadPopularMovies()
     );
-  };
 
   componentDidMount() {
     methodCall('movies').then(movies =>
@@ -140,7 +139,6 @@ class App extends Component {
               <input
                 disabled={this.state.showMyMovies}
                 type="text"
-                ref="textInput"
                 value={this.state.search}
                 placeholder={
                   this.state.showMyMovies
