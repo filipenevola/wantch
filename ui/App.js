@@ -120,9 +120,9 @@ class App extends Component {
                     <div className="movie-description">{overview}</div>
                     <div className="movie-footer">
                       <div className="movie-vote">
-                        <span className={voteClassName}>
+                        <div className={voteClassName}>
                           {voteAverageFormatted}
-                        </span>
+                        </div>
                       </div>
                       <div className="movie-actions">
                         {this.state.moviesIds.includes(movie.id) ? (

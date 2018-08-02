@@ -18,7 +18,6 @@ body {
 }
 
 .container {
-  max-width: 600px;
   margin: 0 auto;
   min-height: 100%;
   background: white;
@@ -148,12 +147,12 @@ header .hide-completed {
   display: flex;
   flex-grow: 1;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
 
   margin: 8px 8px 3px 0;
 }
 
-.movie-vote span {
+.movie-vote div {
   color: white;
   box-shadow: 0 3px 3px rgba(34, 25, 25, 0.4);
   padding: 5px;
