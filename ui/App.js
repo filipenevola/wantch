@@ -88,7 +88,8 @@ class App extends Component {
     });
   };
 
-  toggleShowMyMovies = () => this.setState(
+  toggleShowMyMovies = () =>
+    this.setState(
       ({ showMyMovies }) => ({
         showMyMovies: !showMyMovies,
         search: '',
@@ -113,7 +114,9 @@ class App extends Component {
           <div className="app-bar">
             <div className="app-header">
               <h1>
-                Wantch: {this.state.showMyMovies && `My Movies (${this.state.movies.length})`}
+                Wantch:{' '}
+                {this.state.showMyMovies &&
+                  `My Movies (${this.state.movies.length})`}
                 {!this.state.showMyMovies &&
                   !this.state.search &&
                   'Popular Movies'}

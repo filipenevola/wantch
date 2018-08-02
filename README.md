@@ -10,7 +10,11 @@ TODO:
 - PWA settings
 - Test Android Build
 - Test iOS Build
+- prettier
+- eslint
+FUTURE:
 - lodash debounce
+
 
 ###08/08/2018
 ####01 - 19h - Empty app (only layout)

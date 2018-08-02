@@ -15,7 +15,8 @@ const toQueryString = obj =>
         .join('&')
     : '';
 
-const getRequestURL = (method, obj) => `${BASE_URL}${method}${API_KEY}${toQueryString(obj)}`;
+const getRequestURL = (method, obj) =>
+  `${BASE_URL}${method}${API_KEY}${toQueryString(obj)}`;
 
 export const searchMovies = async obj => {
   if (!obj.query) {
