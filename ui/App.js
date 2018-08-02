@@ -92,14 +92,19 @@ class App extends Component {
               <h1>Wantch: Search Movies ({this.state.moviesSearchTotal})</h1>
             )}
 
-            <form className="movie-search">
-              <input
-                type="text"
-                ref="textInput"
-                placeholder="Type the movie that you want to watch..."
-                onChange={this.searchMovies}
-              />
-            </form>
+            <div className="movie-search">
+              <div>
+                <i className="material-icons">search</i>
+              </div>
+              <div className="movie-search-text">
+                <input
+                  type="text"
+                  ref="textInput"
+                  placeholder="Type the movie that you want to watch..."
+                  onChange={this.searchMovies}
+                />
+              </div>
+            </div>
           </header>
         </div>
 
