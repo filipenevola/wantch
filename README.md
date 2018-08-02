@@ -8,10 +8,11 @@ Original code copied from [here](https://github.com/ardatan/meteor-webpack/tree/
 
 TODO:
 - PWA settings
-- Test Android Build
+- Test Android Build: not working
 - Test iOS Build
 - prettier
 - eslint
+- material icons
 FUTURE:
 - lodash debounce
 
