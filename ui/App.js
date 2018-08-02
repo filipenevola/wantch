@@ -75,12 +75,7 @@ class App extends Component {
             <h1>Movies found ({this.state.moviesSearch.length})</h1>
           )}
 
-          <label className="hide-completed">
-            <input type="checkbox" readOnly checked={true} />
-            Hide Completed Tasks
-          </label>
-
-          <form className="new-task">
+          <form className="movie-search">
             <input
               type="text"
               ref="textInput"
@@ -90,7 +85,7 @@ class App extends Component {
           </form>
         </header>
 
-        <ul>
+        <div className="movie-list">
           {this.state.moviesSearch.map((movie, index) => {
             const {
               id,
@@ -107,7 +102,7 @@ class App extends Component {
                 ? '10'
                 : voteAverage.toFixed(1);
             return (
-              <li key={id}>
+              <div key={id} className="movie-item">
                 <div className="movie">
                   <div className="movie-image">
                     <img src={getImageUrl(posterPath)} />
@@ -144,10 +139,10 @@ class App extends Component {
                     </div>
                   </div>
                 </div>
-              </li>
+              </div>
             );
           })}
-        </ul>
+        </div>
       </div>
     );
   }

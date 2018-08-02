@@ -30,10 +30,6 @@ header {
   position: relative;
 }
 
-#login-buttons {
-  display: block;
-}
-
 h1 {
   font-size: 1.5em;
   margin: 0;
@@ -48,7 +44,7 @@ form {
   position: relative;
 }
 
-.new-task input {
+.movie-search input {
   box-sizing: border-box;
   padding: 10px 0;
   background: transparent;
@@ -58,53 +54,18 @@ form {
   font-size: 1em;
 }
 
-.new-task input:focus {
+.movie-search input:focus {
   outline: 0;
 }
 
-ul {
-  margin: 0;
-  padding: 0;
+.movie-list {
+  margin: 5px;
   background: white;
 }
 
-li {
-  position: relative;
-  list-style: none;
+.movie-item {
   padding: 15px;
   border-bottom: #eee solid 1px;
-}
-
-li .text {
-  margin-left: 10px;
-}
-
-li.private {
-  background: #eee;
-  border-color: #ddd;
-}
-
-header .hide-completed {
-  float: right;
-}
-
-.toggle-private {
-  margin-left: 5px;
-}
-
-@media (max-width: 600px) {
-  li {
-    padding: 12px 15px;
-  }
-
-  .search {
-    width: 150px;
-    clear: both;
-  }
-
-  .new-task input {
-    padding-bottom: 5px;
-  }
 }
 
 .movie {
