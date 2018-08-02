@@ -6,11 +6,12 @@ const MAX_OVERVIEW_LENGTH = 250;
 
 class App extends Component {
   state = {
+    showMyMovies: false,
     movies: [],
     moviesIds: [],
+    search: '',
     moviesSearch: [],
     moviesSearchTotal: 0,
-    pristine: true,
   };
 
   clearMoviesSearch = () =>
@@ -20,8 +21,12 @@ class App extends Component {
 
   searchMovies = ({ target: { value } }) => {
     this.setState(() => ({
-      pristine: false,
+      search: value,
     }));
+    if (!value) {
+      this.loadPopularMovies();
+      return;
+    }
     methodCall('moviesSearch', value)
       .then(result => {
         const data = JSON.parse(result);
@@ -66,10 +71,10 @@ class App extends Component {
     });
   };
 
-  componentDidMount() {
-    methodCall('movies').then(movies =>
-      this.setState(() => ({ movies, moviesIds: movies.map(m => m.id) }))
-    );
+  loadPopularMovies = () => {
+    this.setState(() => ({
+      moviesSearch: [],
+    }));
     methodCall('moviesPopular').then(result => {
       const data = JSON.parse(result);
       if (!data || !data.results) {
@@ -80,37 +85,77 @@ class App extends Component {
         moviesSearch,
       }));
     });
+  };
+
+  toggleShowMyMovies = () => {
+    return this.setState(
+      ({ showMyMovies }) => ({
+        showMyMovies: !showMyMovies,
+        search: '',
+      }),
+      () => !this.state.showMyMovies && this.loadPopularMovies()
+    );
+  };
+
+  componentDidMount() {
+    methodCall('movies').then(movies =>
+      this.setState(() => ({ movies, moviesIds: movies.map(m => m.id) }))
+    );
+    this.loadPopularMovies();
   }
 
   render() {
+    const movies = this.state.showMyMovies
+      ? this.state.movies
+      : this.state.moviesSearch;
     return (
       <div className="app">
-        <div className="app-heder">
-          <header>
-            {this.state.pristine && <h1>Wantch: Popular Movies</h1>}
-            {!this.state.pristine && (
-              <h1>Wantch: Search Movies ({this.state.moviesSearchTotal})</h1>
-            )}
-
-            <div className="movie-search">
-              <div>
-                <i className="material-icons">search</i>
-              </div>
-              <div className="movie-search-text">
-                <input
-                  type="text"
-                  ref="textInput"
-                  placeholder="Type the movie that you want to watch..."
-                  onChange={this.searchMovies}
-                />
-              </div>
+        <header>
+          <div className="app-bar">
+            <div className="app-header">
+              <h1>
+                Wantch: {this.state.showMyMovies && `My Movies (${this.state.movies.length})`}
+                {!this.state.showMyMovies &&
+                  !this.state.search &&
+                  'Popular Movies'}
+                {!this.state.showMyMovies &&
+                  this.state.search &&
+                  'Search Movies'}
+              </h1>
             </div>
-          </header>
-        </div>
+            <div>
+              <button className="add" onClick={() => this.toggleShowMyMovies()}>
+                {this.state.showMyMovies
+                  ? 'See Popular'
+                  : `See My (${this.state.movies.length})`}
+              </button>
+            </div>
+          </div>
+
+          <div className="movie-search">
+            <div>
+              <i className="material-icons">search</i>
+            </div>
+            <div className="movie-search-text">
+              <input
+                disabled={this.state.showMyMovies}
+                type="text"
+                ref="textInput"
+                value={this.state.search}
+                placeholder={
+                  this.state.showMyMovies
+                    ? 'Search disabled on My Movies'
+                    : 'Type the movie that you want to watch...'
+                }
+                onChange={this.searchMovies}
+              />
+            </div>
+          </div>
+        </header>
 
         <div className="main">
           <div className="movie-list">
-            {this.state.moviesSearch.map((movie, index) => {
+            {movies.map((movie, index) => {
               const {
                 id,
                 title,
@@ -152,17 +197,17 @@ class App extends Component {
                         <div className="movie-actions">
                           {this.state.moviesIds.includes(movie.id) ? (
                             <button
-                              className="movie-action remove"
+                              className="remove"
                               onClick={() => this.removeMovie(movie)}
                             >
                               remove, please!
                             </button>
                           ) : (
                             <button
-                              className="movie-action add"
+                              className="add"
                               onClick={() => this.saveMovie(movie)}
                             >
-                              {index % 2 === 0 ? 'want watch!' : 'I "wantch"!'}
+                              {index % 2 === 0 ? 'want watch!' : 'I wantch!'}
                             </button>
                           )}
                         </div>

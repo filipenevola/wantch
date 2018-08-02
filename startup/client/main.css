@@ -42,6 +42,20 @@ body {
   font-size: 14px;
 }
 
+button {
+  font-weight: bold;
+  font-size: 1em;
+  border: none;
+  color: white;
+  box-shadow: 0 3px 3px rgba(34, 25, 25, 0.4);
+  padding: 5px;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 0;
+}
+
 .app {
   display: flex;
   flex-direction: column;
@@ -76,7 +90,12 @@ header {
   box-shadow: 0 3px 3px rgba(34, 25, 25, 0.4);
 }
 
-h1 {
+.app-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-bar h1 {
   font-size: 1.5em;
   margin: 0;
   display: inline-block;
@@ -200,20 +219,6 @@ h1 {
 
 .bad {
   background-color: #ff3046;
-}
-
-.movie-actions button {
-  font-weight: bold;
-  font-size: 1em;
-  border: none;
-  color: white;
-  box-shadow: 0 3px 3px rgba(34, 25, 25, 0.4);
-  padding: 5px;
-  cursor: pointer;
-}
-
-.movie-actions button:focus {
-  outline: 0;
 }
 
 .add {
