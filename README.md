@@ -9,8 +9,10 @@ Original code copied from [here](https://github.com/ardatan/meteor-webpack/tree/
 08/08/2018
 ####01 - 19h - Empty app (only layout)
 - Javascript
+  - template strings
   - conditions: and, or (how they return values)
     - how to use with React `{is && <Component/>}`
+  - functions: arrow, return object ({})
   - arrays: includes
   - functional: filter, map
   - modules: import, export

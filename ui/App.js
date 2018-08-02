@@ -1,6 +1,7 @@
 import { hot } from 'react-hot-loader';
 import React, { Component } from 'react';
 import { methodCall } from './methods';
+import { getImageUrl } from '../api/moviesHelper';
 
 class App extends Component {
   state = {
@@ -90,29 +91,59 @@ class App extends Component {
         </header>
 
         <ul>
-          {this.state.moviesSearch.map(movie => {
-            const { id, title, vote_average: voteAverage } = movie;
+          {this.state.moviesSearch.map((movie, index) => {
+            const {
+              id,
+              title,
+              vote_average: voteAverage,
+              poster_path: posterPath,
+              overview,
+            } = movie;
+            const voteClassName =
+              voteAverage < 5 ? 'bad' : voteAverage > 7 ? 'good' : 'default';
+            const voteAverageFormatted = !voteAverage
+              ? '0.0'
+              : voteAverage === 10
+                ? '10'
+                : voteAverage.toFixed(1);
             return (
               <li key={id}>
-                {this.state.moviesIds.includes(movie.id) ? (
-                  <button
-                    className="delete"
-                    onClick={() => this.removeMovie(movie)}
-                  >
-                    remove
-                  </button>
-                ) : (
-                  <button
-                    className="delete"
-                    onClick={() => this.saveMovie(movie)}
-                  >
-                    add
-                  </button>
-                )}
-                  <div>{voteAverage}</div>
-                  <div>
-                    <strong>{title}</strong>
+                <div className="movie">
+                  <div className="movie-image">
+                    <img src={getImageUrl(posterPath)} />
                   </div>
+
+                  <div className="movie-content">
+                    <div className="movie-title">
+                      <strong>{title}</strong>
+                    </div>
+                    <div className="movie-description">{overview}</div>
+                    <div className="movie-footer">
+                      <div className="movie-vote">
+                        <span className={voteClassName}>
+                          {voteAverageFormatted}
+                        </span>
+                      </div>
+                      <div className="movie-actions">
+                        {this.state.moviesIds.includes(movie.id) ? (
+                          <button
+                            className="movie-action remove"
+                            onClick={() => this.removeMovie(movie)}
+                          >
+                            remove, please!
+                          </button>
+                        ) : (
+                          <button
+                            className="movie-action add"
+                            onClick={() => this.saveMovie(movie)}
+                          >
+                            {index % 2 === 0 ? 'want watch!' : 'I "wantch"!'}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </li>
             );
           })}
