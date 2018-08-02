@@ -6,6 +6,11 @@ To have a better developer experience we are using [meteor-webpack](https://gith
 
 Original code copied from [here](https://github.com/ardatan/meteor-webpack/tree/master/examples/react) thanks to [@ardatan](https://github.com/ardatan)
 
+TODO:
+- PWA settings
+- Test Android Build
+- Test iOS Build
+
 08/08/2018
 ####01 - 19h - Empty app (only layout)
 - Javascript

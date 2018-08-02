@@ -29,7 +29,5 @@ export const searchMovies = async obj => {
 
 export const popularMovies = async () => {
   const url = getRequestURL(DISCOVER_MOVIE);
-  console.log(`url=${url}`);
-
   return rp(url);
 };
