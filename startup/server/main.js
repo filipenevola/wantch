@@ -1,1 +1,1 @@
-import '../../api/movies';
+import '../../api/moviesMethods';
