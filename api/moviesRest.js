@@ -1,10 +1,11 @@
 import rp from 'request-promise';
 
-const API_KEY = '&api_key=cb19752a4a96a51fc14fcca42d113ee3&';
-const BASE_URL = 'https://api.themoviedb.org/3/';
-const SEARCH_MOVIE = 'search/movie?';
-const DISCOVER_MOVIE =
-  'discover/movie?sort_by=vote_average.desc&vote_count.gte=50';
+import {
+  API_KEY,
+  BASE_URL,
+  SEARCH_MOVIE,
+  DISCOVER_MOVIE,
+} from 'meteor/filipenevola:constants';
 
 const toQueryString = obj =>
   obj
@@ -23,6 +24,8 @@ export const searchMovies = async obj => {
     return null;
   }
   const url = getRequestURL(SEARCH_MOVIE, obj);
+  console.log('url', url);
+
   return rp(url);
 };
 

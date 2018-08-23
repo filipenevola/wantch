@@ -15,4 +15,5 @@ ardatan:webpack
 ardatan:webpack-dev-middleware
 
 # avoid tracker not found error on the client
-tracker
+tracker@1.2.0
+filipenevola:constants
