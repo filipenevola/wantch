@@ -1,9 +1,9 @@
-# App to manage Movies that you want to Watch: Wantch
+# Wantch
 
-I'm creating this repository to teach Meteor, React, PWA, etc at an [event](https://www.even3.com.br/setec18) in Brazil.
+App to manage Movies that you want to Watch.
 
-To have a better developer experience we are using [meteor-webpack](https://github.com/ardatan/meteor-webpack) package.
+I created this project to teach Meteor, React, PWA in [Setec18](https://www.even3.com.br/setec18) in Brazil.
 
-Original code copied from [here](https://github.com/ardatan/meteor-webpack/tree/master/examples/react) thanks to [@ardatan](https://github.com/ardatan)
+## How to 
 
 ## License: MIT

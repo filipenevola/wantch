@@ -1,6 +1,6 @@
-import { Meteor } from 'meteor/meteor';
-import { searchMovies, popularMovies } from './moviesRest';
-import { MoviesCollection } from '../data/MoviesCollection';
+import { Meteor } from "meteor/meteor";
+import { searchMovies, popularMovies } from "./moviesRest";
+import { MoviesCollection } from "../data/MoviesCollection";
 
 Meteor.methods({
   moviesSearch(query) {
@@ -17,5 +17,5 @@ Meteor.methods({
   },
   movieRemove(movie) {
     return MoviesCollection.remove({ id: movie.id });
-  },
+  }
 });

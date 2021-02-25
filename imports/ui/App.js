@@ -1,34 +1,33 @@
-import { hot } from 'react-hot-loader';
-import React, { Component } from 'react';
-import { methodCall } from './methods';
-import { getImageUrl } from '../api/moviesHelper';
+import React, { Component } from "react";
+import { methodCall } from "./methods";
+import { getImageUrl } from "../api/moviesHelper";
 
 const MAX_OVERVIEW_LENGTH = 250;
 
-class App extends Component {
+export class App extends Component {
   state = {
     showMyMovies: false,
     movies: [],
     moviesIds: [],
-    search: '',
+    search: "",
     moviesSearch: [],
-    moviesSearchTotal: 0,
+    moviesSearchTotal: 0
   };
 
   clearMoviesSearch = () =>
     this.setState(() => ({
-      moviesSearch: [],
+      moviesSearch: []
     }));
 
   searchMovies = ({ target: { value } }) => {
     this.setState(() => ({
-      search: value,
+      search: value
     }));
     if (!value) {
       this.loadPopularMovies();
       return;
     }
-    methodCall('moviesSearch', value)
+    methodCall("moviesSearch", value)
       .then(result => {
         const data = JSON.parse(result);
         if (!data || !data.results) {
@@ -37,11 +36,11 @@ class App extends Component {
         }
         const {
           results: moviesSearch,
-          total_results: moviesSearchTotal,
+          total_results: moviesSearchTotal
         } = data;
         this.setState(() => ({
           moviesSearch,
-          moviesSearchTotal,
+          moviesSearchTotal
         }));
       })
       .catch(error => {
@@ -51,39 +50,39 @@ class App extends Component {
   };
 
   saveMovie = movie => {
-    methodCall('movieSave', movie);
+    methodCall("movieSave", movie);
     this.setState(({ movies, moviesIds }) => {
       if (moviesIds.includes(movie.id)) return {};
       return {
         movies: [...movies, movie],
-        moviesIds: [...moviesIds, movie.id],
+        moviesIds: [...moviesIds, movie.id]
       };
     });
   };
 
   removeMovie = movie => {
-    methodCall('movieRemove', movie);
+    methodCall("movieRemove", movie);
     this.setState(({ movies, moviesIds }) => {
       if (!moviesIds.includes(movie.id)) return {};
       return {
         movies: movies.filter(m => m.id !== movie.id),
-        moviesIds: moviesIds.filter(id => id !== movie.id),
+        moviesIds: moviesIds.filter(id => id !== movie.id)
       };
     });
   };
 
   loadPopularMovies = () => {
     this.setState(() => ({
-      moviesSearch: [],
+      moviesSearch: []
     }));
-    methodCall('moviesPopular').then(result => {
+    methodCall("moviesPopular").then(result => {
       const data = JSON.parse(result);
       if (!data || !data.results) {
         return;
       }
       const { results: moviesSearch } = data;
       this.setState(() => ({
-        moviesSearch,
+        moviesSearch
       }));
     });
   };
@@ -92,13 +91,13 @@ class App extends Component {
     this.setState(
       ({ showMyMovies }) => ({
         showMyMovies: !showMyMovies,
-        search: '',
+        search: ""
       }),
       () => !this.state.showMyMovies && this.loadPopularMovies()
     );
 
   componentDidMount() {
-    methodCall('movies').then(movies =>
+    methodCall("movies").then(movies =>
       this.setState(() => ({ movies, moviesIds: movies.map(m => m.id) }))
     );
     this.loadPopularMovies();
@@ -114,21 +113,21 @@ class App extends Component {
           <div className="app-bar">
             <div className="app-header">
               <h1>
-                Wantch:{' '}
+                Wantch:{" "}
                 {this.state.showMyMovies &&
                   `My Movies (${this.state.movies.length})`}
                 {!this.state.showMyMovies &&
                   !this.state.search &&
-                  'Popular Movies'}
+                  "Popular Movies"}
                 {!this.state.showMyMovies &&
                   this.state.search &&
-                  'Search Movies'}
+                  "Search Movies"}
               </h1>
             </div>
             <div>
               <button className="add" onClick={() => this.toggleShowMyMovies()}>
                 {this.state.showMyMovies
-                  ? 'See Popular'
+                  ? "See Popular"
                   : `See My (${this.state.movies.length})`}
               </button>
             </div>
@@ -145,8 +144,8 @@ class App extends Component {
                 value={this.state.search}
                 placeholder={
                   this.state.showMyMovies
-                    ? 'Search disabled on My Movies'
-                    : 'Type the movie that you want to watch...'
+                    ? "Search disabled on My Movies"
+                    : "Type the movie that you want to watch..."
                 }
                 onChange={this.searchMovies}
               />
@@ -162,14 +161,14 @@ class App extends Component {
                 title,
                 vote_average: voteAverage,
                 poster_path: posterPath,
-                overview,
+                overview
               } = movie;
               const voteClassName =
-                voteAverage < 5 ? 'bad' : voteAverage > 7 ? 'good' : 'default';
+                voteAverage < 5 ? "bad" : voteAverage > 7 ? "good" : "default";
               const voteAverageFormatted = !voteAverage
-                ? '0.0'
+                ? "0.0"
                 : voteAverage === 10
-                  ? '10'
+                  ? "10"
                   : voteAverage.toFixed(1);
               const overviewFormatted =
                 overview && overview.length > MAX_OVERVIEW_LENGTH
@@ -208,7 +207,7 @@ class App extends Component {
                               className="add"
                               onClick={() => this.saveMovie(movie)}
                             >
-                              {index % 2 === 0 ? 'want watch!' : 'I wantch!'}
+                              {index % 2 === 0 ? "want watch!" : "I wantch!"}
                             </button>
                           )}
                         </div>
@@ -224,5 +223,3 @@ class App extends Component {
     );
   }
 }
-
-export default hot(module)(App);

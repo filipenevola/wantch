@@ -1,6 +1,6 @@
-import { Mongo } from 'meteor/mongo';
+import { Mongo } from "meteor/mongo";
 
-const moviesCollection = new Mongo.Collection('movies');
+const moviesCollection = new Mongo.Collection("movies");
 
 Object.assign(moviesCollection, {
   save(movie) {
@@ -10,7 +10,7 @@ Object.assign(moviesCollection, {
       return this.findOne(dbMovie._id);
     }
     return this.findOne(this.insert(movie));
-  },
+  }
 });
 
 export { moviesCollection as MoviesCollection };
