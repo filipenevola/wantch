@@ -10,12 +10,12 @@ Meteor.methods({
     return popularMovies();
   },
   movies() {
-    return MoviesCollection.find({}, { sort: { title: 1 } }).fetch();
+    return MoviesCollection.find({}, { sort: { title: 1 } }).fetchAsync();
   },
   movieSave(movie) {
-    return MoviesCollection.save(movie);
+    return  MoviesCollection.save(movie);
   },
   movieRemove(movie) {
-    return MoviesCollection.remove({ id: movie.id });
-  }
+    return MoviesCollection.removeAsync({ id: movie.id });
+  },
 });

@@ -1,10 +1,10 @@
-meteor-base@1.4.0
-mobile-experience@1.1.0
-mongo@1.10.1
-static-html
+meteor-base@1.5.2-beta300.7
+mobile-experience@1.1.1-beta300.7
+mongo@2.0.0-beta300.7
+static-html@1.3.3-beta300.7
 
-standard-minifier-css@1.7.2
-standard-minifier-js@2.6.0
-ecmascript@0.15.0
-hot-module-replacement@0.2.0
-dev-error-overlay@0.1.0
+standard-minifier-css@1.9.3-beta300.7
+standard-minifier-js@3.0.0-beta300.7
+ecmascript@0.16.8-beta300.7
+hot-module-replacement@0.5.4-beta300.7
+dev-error-overlay@0.1.3-beta300.7

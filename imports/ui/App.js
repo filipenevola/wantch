@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { methodCall } from "./methods";
 import { getImageUrl } from "../api/moviesHelper";
 
 const MAX_OVERVIEW_LENGTH = 250;
@@ -18,7 +17,7 @@ export const App = () => {
       loadPopularMovies();
       return;
     }
-    methodCall("moviesSearch", value)
+    Meteor.callAsync("moviesSearch", value)
       .then(result => {
         const data = JSON.parse(result);
         if (!data || !data.results) {
@@ -35,7 +34,7 @@ export const App = () => {
   };
 
   const saveMovie = movie => {
-    methodCall("movieSave", movie).catch(error =>
+    Meteor.callAsync("movieSave", movie).catch(error =>
       console.error(`Error saving a movie ${movie.id}`,error)
     );
     if (!movies.map(({ id }) => id).includes(movie.id)) {
@@ -44,7 +43,7 @@ export const App = () => {
   };
 
   const removeMovie = movie => {
-    methodCall("movieRemove", movie).catch(error =>
+    Meteor.callAsync("movieRemove", movie).catch(error =>
       console.error(`Error removing a movie ${movie.id}`,error)
     );
     if (movies.map(({ id }) => id).includes(movie.id)) {
@@ -54,7 +53,7 @@ export const App = () => {
 
   const loadPopularMovies = () => {
     setMoviesSearch([]);
-    methodCall("moviesPopular").then(result => {
+    Meteor.callAsync("moviesPopular").then(result => {
       const data = JSON.parse(result);
       if (!data || !data.results) {
         return;
@@ -73,7 +72,7 @@ export const App = () => {
   };
 
   useEffect(() => {
-    methodCall("movies").then(movies => {
+    Meteor.callAsync("movies").then(movies => {
       setMovies(movies);
     });
     loadPopularMovies();
